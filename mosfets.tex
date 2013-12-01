@@ -28,26 +28,74 @@ painstakingly learned and derived.
 
 \section{Notation}
 
+\begin{table}
+ \begin{tabular}{l|l}
+  Symbol & Meaning \\
+  \hline
+  $V_{DD}$ & Supply voltage applied to drain\\
+  $V_{GS}$ & DC voltage between $G$ and $S$\\
+  $v_{GS}$ & AC voltage between $G$ and $S$
+ \end{tabular}
+ \caption{Symbol meanings.}
+ \label{tab:symbols}
+\end{table}
+
+Capital letters $V$ and $I$ mean DC voltages and currents respectively.
+Subscripts denote reference points for the measurement. Repeated subscripts
+denote power sources. Examples are given in Table \ref{tab:symbols}.
+
 \section{Basic Theory}
 
 These approximations are usually valid:
 \begin{align}
- V_T &\approx 2V
+ V_{th} &\approx 2V
 \end{align}
 
 \section{Saturation Mode}
 
 The conditions for operation in saturation mode are:
 \begin{align}
- v_{GS} &> V_T \; \text{and}\\
- v_{DS} &> v_{GS} - V_T.
+ v_{GS} &\geq V_{th} \; \text{and}\\
+ v_{DS} &\geq v_{GS} - V_{th}. \label{eq:saturationCond}
 \end{align}
 
 In this mode, a simplified model for the transistor's operation is:
 \begin{align}
- i_D = K(v_{GS}-V_T)^2
+ i_D = K(v_{GS}-V_{th})^2 \label{eq:saturationOperation}
 \end{align}
 
+To find the saturation region on the $(v_{DS},i_D)$
+plots, we note that Eq. \eqref{eq:saturationCond} gives
+$v_{GS} \leq V_{th}+v_{DS}$. Substituing that into Eq. \eqref{eq:saturationOperation},
+we have:
+\begin{align}
+ i_D \leq Kv_{DS}^2.
+\end{align}
+
+\subsection{Transconductance}
+
+Typically, the transistor is biased inside the saturation region with a DC
+gate voltage $V_{GS}$, causing a DC current $I_D=K(V_{GS}-V_{th})^2$ to flow
+into the gate. When an AC voltage $v_{in}$ is superimposed
+($v_{GS}=V_{GS}+v_{in}$), we can rewrite Eq. \eqref{eq:saturationOperation}
+with a Taylor expansion around the bias point as:
+\begin{align}
+ i_D = I_Q + 2\sqrt{KI_Q} v_{in} + K v_{in}^2, \label{eq:qpointOperation}
+\end{align}
+where $I_Q=K(V_{GS}-V_{th})^2$ is the DC \textbf{quiescent current}.
+
+Since Eq. \eqref{eq:qpointOperation} tells us that a small change in $v_{in}$
+results in a linear increase in current (ignoring the squared term), the
+transconductance of the device is:
+\begin{align}
+ g_m = 2\sqrt{KI_Q} = 2K(V_{GS}-V_{th}).
+\end{align}
+
+
 \chapter{Generic RF Amplifier}%================================================
+
+\section{Distortion}
+
+\section{Design Procedure}
 
 \end{document}          
