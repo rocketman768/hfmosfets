@@ -1,0 +1,24 @@
+Files: *
+Copyright: 2013, Philip G. Lee <rocketman768@gmail.com>
+License: GFDL-1.3
+
+Files: images/*
+Copyright: 2013, Philip G. Lee <rocketman768@gmail.com>
+License: WTFPL-2
+
+License: GFDL-1.3
+    A copy of this license should be included with this package. If not,
+    visit https://www.gnu.org/licenses/fdl.html
+
+License: WTFPL-2
+   Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+
+   Everyone is permitted to copy and distribute verbatim or modified
+   copies of this license document, and changing it is allowed as long
+   as the name is changed.
+
+   DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+   0. You just DO WHAT THE FUCK YOU WANT TO.
+
