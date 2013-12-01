@@ -69,7 +69,7 @@ plots, we note that Eq. \eqref{eq:saturationCond} gives
 $v_{GS} \leq V_{th}+v_{DS}$. Substituing that into Eq. \eqref{eq:saturationOperation},
 we have:
 \begin{align}
- i_D \leq Kv_{DS}^2.
+ i_D \leq Kv_{DS}^2. \label{eq:saturationCond2}
 \end{align}
 
 \subsection{Transconductance}
@@ -93,6 +93,47 @@ transconductance of the device is:
 
 
 \chapter{Generic RF Amplifier}%================================================
+
+\noindent (Schematic of biased NFET w/ drain RFC to VDD and load resistance)
+
+\begin{align}
+ v_{GS} &= V_{GS} + v_{in} \\
+ v_{DS} &= V_{DD} - i_LR_L \\
+ i_L &= i_D-I_Q
+\end{align}
+
+We want this amplifier to be as linear as possible, operating in the saturation
+mode, and to develop as much power as possible. One of the limiting factors
+is the requirement to stay in the saturation region. Equation
+\eqref{eq:saturationCond2} becomes:
+\begin{align}
+ i_D &\leq Kv_{DS}^2 \implies \nonumber \\
+ i_L + I_Q &\leq K(V_{DD}-i_LR_L)^2. \nonumber
+\end{align}
+To make the analysis simpler and independent of $I_Q$, we make the assumption
+that it is nearly 0.
+\begin{align}
+ &i_L \leq K(V_{DD}-i_LR_L)^2 \; \text{i.e.} \nonumber \\
+ &K(V_{DD}-i_LR_L)^2 - i_L \geq 0.
+\end{align}
+
+To develop the most power, we want to find the maximum current $i_{L(max)}$ that
+satisfies the inequality. This is a really messy quadratic equation to solve
+exactly for $i_L$, but you might approximate it by $i_{L(max)}=V_{DD}/R_L$. The
+problem with that estimate is that it overestimates the maximum current by
+making the squared term to go 0 and violating the constraint by $-V_{DD}/R_L$.
+A better estimate is
+\begin{align}
+ i_{L(max)} = \frac{V_{DD}}{\sqrt{2}R_L},
+\end{align}
+which usually underestimates the maximum current by a bit (somehow
+\textbf{NOTE}: need to find out and explain why).
+
+So, the maximum power we can develop by operating in the saturation mode is
+\begin{align}
+ P_{max} = i_{L(max)}^2R_L = \frac{V_{DD}^2}{2R_L}.
+\end{align}
+
 
 \section{Distortion}
 
