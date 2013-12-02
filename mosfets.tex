@@ -91,6 +91,10 @@ transconductance of the device is:
  g_m = 2\sqrt{KI_Q} = 2K(V_{GS}-V_{th}).
 \end{align}
 
+In practice, you can get $g_m$ directly off the spec sheet if it includes a
+$(v_{DS},i_D)$ plot with curves of closely-spaced $v_{GS}$. For example,
+if it shows that for $v_{GS}=4.5V$, $i_D=0.3A$, and for $v_{GS}=5.0V$,
+$i_D=1.0A$, then $g_m \approx (1.0A-0.3A)/(5.0V-4.5V) = 1.4A/V$.
 
 \chapter{Generic RF Amplifier}%================================================
 
@@ -124,19 +128,49 @@ problem with that estimate is that it overestimates the maximum current by
 making the squared term to go 0 and violating the constraint by $-V_{DD}/R_L$.
 A better estimate is
 \begin{align}
- i_{L(max)} = \frac{V_{DD}}{\sqrt{2}R_L},
+ i_{L(max)} \approx \frac{V_{DD}}{\sqrt{2}R_L},
 \end{align}
 which usually underestimates the maximum current by a bit (somehow
 \textbf{NOTE}: need to find out and explain why).
 
 So, the maximum power we can develop by operating in the saturation mode is
 \begin{align}
- P_{max} = i_{L(max)}^2R_L = \frac{V_{DD}^2}{2R_L}.
+ P \approx i_{L(max)}^2R_L = \frac{V_{DD}^2}{2R_L}.
+\end{align}
+This gives us an easy way to set $R_L$ for a given power
+\begin{align}
+ R_L = \frac{V_{DD}^2}{2P}.
 \end{align}
 
 
 \section{Distortion}
 
+Distortion (nonlinearity) is reduced by increasing $I_Q$.
+
 \section{Design Procedure}
+
+\begin{enumerate}
+ \item Choose $I_Q$ big enough to meet linearity requirements.
+ \item Get $g_m$ from spec sheet.
+ \item Calculate $K = g_m^2/(4I_{g_m})$, where $I_{g_m}$ should be given along with
+       $g_m$ on spec sheet.
+ \item Calculate the maximum power this FET can deliver.
+  \begin{align}
+   P_{max} = \frac{V_{DD}}{\sqrt{2}}(KV_{DD}^2(\sqrt{2}-1)^2/2-I_Q)
+  \end{align}
+ \item Choose desired power $P \leq P_{max}$.
+ \item Set $R_L=V_{DD}^2/(2P)$.
+
+ \item Calculate required input voltage $v_{in(max)} = g_m^{-1}\sqrt{P/R_L}$.
+ \item Add input step-up or step-down network as necessary.
+ \item Check that the MOSFET is still in saturation: $i_D \leq K v_{DS}^2$.
+  \begin{align}
+   I_Q + g_m v_{in(max)} &\leq K (V_{DD}-g_m v_{in(max)}R_L)^2 \nonumber \\
+   I_Q + \sqrt{P/R_L} &\leq K(V_{DD}-\sqrt{P R_L})^2 \nonumber \\
+   I_Q + \sqrt{2} P/V_{DD} &\leq K(V_{DD}-V_{DD}/\sqrt{2})^2 \nonumber \\
+   I_Q + \sqrt{2} P/V_{DD} &\leq KV_{DD}^2(1-1/\sqrt{2})^2 \nonumber \\
+  \end{align}
+ \item Add matching network to transform $R_L$ to required output impedance
+\end{enumerate}
 
 \end{document}          
